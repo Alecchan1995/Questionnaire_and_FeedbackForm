@@ -1,0 +1,66 @@
+<div style="font-size:30px;"><b>NO:</b><span class="text-style">{{datacontentdata.ID}}</span>
+</div>
+<br>
+<!-- <ma class="example-card" style="font-size:20px;"> -->
+<div class="row" style="font-size:20px;">
+  <div class="col-12 	col-sm-6"><b>申請人:</b><span class="text-style">{{datacontentdata.SystemFeedbackForm.Fill_In_Person}}</span>
+  </div>
+  <div class="col-12 	col-sm-6"><b>申請時間:</b><span class="text-style">{{datacontentdata.SystemFeedbackForm.Send_Time.replace("T","
+      ").split(".")[0]}}</span>
+  </div>
+</div>
+<div class="row" style="font-size:20px;">
+  <div class="col-12 	col-sm-6"><b>種類:</b><span class="text-style">{{datacontentdata.SystemFeedbackForm.Problem_Type}}</span>
+  </div>
+  <div class="col-12 col-sm-6"><b>系統:</b><span class="text-style">{{datacontentdata.SystemFeedbackForm.System_Name}}</span></div>
+</div>
+<div class="row" style="font-size:20px;">
+  <div class="col-12 	col-sm-12"><b>PM:</b><span class="text-style">{{datacontentdata.principal}}</span>
+  </div>
+</div>
+<div class="row" style="font-size:20px;">
+  <div class="col-12 	col-sm-6"><b>處理人:</b><span class="text-style">{{datacontentdata.deal_with_person}}</span>
+  </div>
+  <div class="col-12 col-sm-4" *ngIf="permission"><button mat-raised-button color="primary"  (click)="open_edit_deal_with_person()" class="float-start" >編輯</button> <button mat-raised-button color="primary"  (click)="open_edit_record_edit_del_with_person(datacontentdata.ID)" class="float-start">記錄</button></div>
+</div>
+<br>
+<br>
+<mat-label style="font-size:20px;"><b>問題內容</b></mat-label>
+<br>
+<mat-form-field appearance="outline" style="width: 100%;">
+  <textarea matInput [value]="datacontentdata.SystemFeedbackForm.description" disabled></textarea>
+</mat-form-field>
+<br>
+<mat-label style="font-size:20px;"><b>處理裝態</b></mat-label><br>
+<mat-form-field appearance="outline" style="font-size: 12px; width:100%;" >
+  <mat-select placeholder="下拉選單" id="SystemProblemType" required
+    [(ngModel)]="datacontentdata.SystemFeedbackForm.deal_with_state" *ngIf="permission">
+    <mat-option *ngFor="let Optionitem of processidea" [value]="Optionitem">{{ Optionitem }} </mat-option>
+  </mat-select>
+  <mat-select placeholder="下拉選單" id="SystemProblemType" required
+    [(ngModel)]="datacontentdata.SystemFeedbackForm.deal_with_state" *ngIf="!permission">
+    <mat-option *ngFor="let Optionitem of processidea" [value]="Optionitem" disabled>{{ Optionitem }} </mat-option>
+  </mat-select>
+</mat-form-field>
+<mat-label style="font-size:20px;"><b>處理方法</b></mat-label>
+<br>
+<mat-form-field appearance="outline" style="width: 100%;">
+  <textarea matInput [(ngModel)]="datacontentdata.deal_with_idea" style="height: 10rem;" *ngIf="permission"></textarea>
+  <textarea matInput [(ngModel)]="datacontentdata.deal_with_idea" style="height: 10rem;" disabled *ngIf="!permission"></textarea>
+</mat-form-field>
+<br>
+<div *ngIf="datacontentdata.SystemFeedbackForm.filename.length>0">ATTACTMENT</div>
+<mat-list style="display:flex;   flex-wrap: wrap;" *ngIf="datacontentdata.SystemFeedbackForm.filename.length>0" class = "mat-button-wrappers">
+  <mat-list-item *ngFor="let folder of datacontentdata.SystemFeedbackForm.filename.split(',')" style="width: 30%;">
+    <button mat-raised-button color="primary" style="width: 100%; text-align: center;" matTooltip="{{folder}}" class="mat-button-wrappers"
+    (click)="downfile(folder)">
+      <mat-icon mat-list-icon>folder</mat-icon>
+      <div mat-line>{{folder}}</div>
+    </button>
+  </mat-list-item>
+  <mat-divider></mat-divider>
+</mat-list>
+<br>
+<!-- </mat-card> -->
+<button mat-raised-button color="warn" (click)="closedialog()" class="float-start">取消</button>
+<button mat-raised-button color="primary" (click)="senddtata()" class="float-end" *ngIf="permission">傳送/保存</button>

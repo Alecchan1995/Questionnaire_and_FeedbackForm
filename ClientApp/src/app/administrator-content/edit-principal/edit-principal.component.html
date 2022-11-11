@@ -1,0 +1,36 @@
+<h1><b>目前負責人:</b><div style="color:blue">{{data.deal_with_person_name_list}}</div></h1>
+<form class="example-form">
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Number</mat-label>
+    <input type="text"
+           placeholder="Pick one"
+           aria-label="Number"
+           matInput
+           [formControl]="myControl"
+           [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let option of options" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>接案人</mat-label>
+    <input type="text"
+           placeholder="Pick one"
+           aria-label="接案人"
+           matInput
+           [formControl]="myControls"
+           [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let option of options" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>
+<button mat-raised-button color="warn"     (click)="closedialog()" class="float-start">關閉</button>
+<div class="float-start" style="font-size:20px; color:red;">{{message}}</div>
+<button mat-raised-button color="primary"  (click)="add_data()" class="float-end">增加</button>
+<button mat-raised-button color="primary"  (click)="delete_data()" class="float-end">刪除</button>
+

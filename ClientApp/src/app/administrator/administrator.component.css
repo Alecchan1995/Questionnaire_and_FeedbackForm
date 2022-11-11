@@ -1,0 +1,15 @@
+table {
+  width: 80%;
+  min-height: 5%;
+}
+
+
+.mat-row:hover .mat-cell {
+  border-color: royalblue;
+  color: blue;
+}
+mat-cell > span.ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}

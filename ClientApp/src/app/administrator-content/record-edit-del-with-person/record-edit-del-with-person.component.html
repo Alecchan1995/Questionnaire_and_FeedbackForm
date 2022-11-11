@@ -1,0 +1,5 @@
+<h1>記錄:</h1>
+<div *ngFor="let data of dataSource">
+  {{data.ID}} --------- {{data.deal_with_persons}}  --------- {{data.access_time | date:'medium'}}
+</div>
+<button mat-raised-button color="warn" (click)="closedialog()" class="float-start mt-1">取消</button>

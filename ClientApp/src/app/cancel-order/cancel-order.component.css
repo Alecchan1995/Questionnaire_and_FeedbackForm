@@ -1,0 +1,12 @@
+.example-form {
+  min-width: 150px;
+  width: 90%;
+}
+
+.example-full-width {
+  width: 90%;
+}
+.example-additional-selection {
+  opacity: 0.75;
+  font-size: 0.75em;
+}

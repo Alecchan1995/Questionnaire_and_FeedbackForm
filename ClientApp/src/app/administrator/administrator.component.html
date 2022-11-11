@@ -1,0 +1,78 @@
+<div>
+  <div>
+    <mat-form-field appearance="fill" style="display: inline-block; margin-left:10%;" class="float-start">
+      <mat-label>Search申請人:</mat-label>
+      <input matInput [(ngModel)]="searchpeople" (keydown.enter)="check('people')">
+      <button matSuffix mat-icon-button aria-label="search" (click)="check('people')" [disabled]="SearchstringForm.invalid">
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill" style="display: inline-block; margin-left:3%;"  class="float-start">
+      <mat-label>SearchNO:</mat-label>
+      <input matInput [(ngModel)]="searchno" (keydown.enter)="check('no')">
+      <button matSuffix mat-icon-button aria-label="search" (click)="check('no')" [disabled]="SearchstringForm.invalid">
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+    <div style="font-size: 35px; font-weight: 1000; display: inline-block; margin-right:10%; color:rgb(63, 81, 181)"  class="float-end">申請表單</div>
+  </div>
+</div>
+
+<table mat-table [dataSource]="PrivateDataInits" class="mat-elevation-z5" [fixedLayout]="true">
+  <ng-container matColumnDef="ID">
+    <mat-header-cell *matHeaderCellDef style="width:5%; "> NO: </mat-header-cell>
+    <mat-cell *matCellDef="let element"> <span class="ellipsis">{{element.ID}}</span> </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="SystemFeedbackForm.Send_Time">
+    <mat-header-cell *matHeaderCellDef style="width:10%; "> 報修日期 </mat-header-cell>
+    <mat-cell *matCellDef="let element" (click)="openDialog(element)"> <span class="ellipsis">{{element.SystemFeedbackForm.Send_Time.replace("T"," ").split(".")[0]}}</span> </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="SystemFeedbackForm.Fill_In_Person">
+    <mat-header-cell *matHeaderCellDef style="width:10%;"> 申請人 </mat-header-cell>
+    <mat-cell *matCellDef="let element" (click)="openDialog(element)"> <span class="ellipsis">{{element.SystemFeedbackForm.Fill_In_Person}}</span>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="SystemFeedbackForm.Problem_Type">
+    <mat-header-cell *matHeaderCellDef style="width:5%;"> 問題類型 </mat-header-cell>
+    <mat-cell *matCellDef="let element" (click)="openDialog(element)"> <span class="ellipsis">{{element.SystemFeedbackForm.Problem_Type}}</span>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="SystemFeedbackForm.description">
+    <mat-header-cell *matHeaderCellDef style="width:10%;"> 問題描述 </mat-header-cell>
+    <mat-cell *matCellDef="let element" (click)="openDialog(element)"> <span class="ellipsis">{{element.SystemFeedbackForm.description.substring(0,15)}}</span>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="deal_with_time">
+    <mat-header-cell *matHeaderCellDef style="width:10%;"> 最後更新時間 </mat-header-cell>
+    <mat-cell *matCellDef="let element" (click)="openDialog(element)"> <span class="ellipsis">{{element.deal_with_time.replace("T"," ").split(".")[0]}}</span> </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="deal_with_idea">
+    <mat-header-cell *matHeaderCellDef> 處理方法 </mat-header-cell>
+    <mat-cell *matCellDef="let element" (click)="openDialog(element)" style="width: 20%;"> <span class="ellipsis">{{element.deal_with_idea.substring(0,20)}}</span>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="deal_with_person">
+    <mat-header-cell *matHeaderCellDef> 處理人 </mat-header-cell>
+    <mat-cell *matCellDef="let element" (click)="openDialog(element)" style="width: 5%;"> <span class="ellipsis">{{element.deal_with_person}}</span>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="principal">
+    <mat-header-cell *matHeaderCellDef> PM </mat-header-cell>
+    <mat-cell *matCellDef="let element" (click)="openDialog(element)" style="width: 5%;"> <span class="ellipsis">{{element.principal}}</span>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="SystemFeedbackForm.deal_with_state">
+    <mat-header-cell *matHeaderCellDef style="width:5%;"> 處理裝態 </mat-header-cell>
+    <mat-cell *matCellDef="let element" (click)="openDialog(element)"> <span class="ellipsis">{{element.SystemFeedbackForm.deal_with_state}}</span>
+    </mat-cell>
+  </ng-container>
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;" style="cursor: pointer;"> </mat-row>
+</table>
+<mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons aria-label="Select page of periodic elements"
+  style="margin:0 10%;">
+</mat-paginator>
+<button mat-raised-button color="primary" class="float-end" style=" margin-right:10%;  text-align: center!important;" (click)="GetYourmaintainer()">Your maintainer</button>
+<button mat-raised-button color="primary" class="float-end" style=" margin-right:3%;  text-align: center!important;" (click)="GetAlldata()">ALL</button>
+<!-- <button mat-raised-button color="primary" class="float-end" style=" margin-right:3%;"></button> -->
+

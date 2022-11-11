@@ -1,0 +1,46 @@
+<div style="width:80%;">
+  <mat-card class="example-card" style="text-align: left; max-width: 100%;">
+    <h1 style="color:darkgoldenrod; font-size:35px; font-weight: 1000;" align="center">服務申請單</h1>
+    <hr>
+    <div style="padding: 0 10%;padding-bottom: 5%;">
+      <label id="example-radio-group-label" style="color:darkgoldenrod; font-size:20px;">問題種類 (Problem Type):</label>
+      <mat-form-field appearance="outline" style="font-size: 12px; width:100%;">
+        <mat-select placeholder="下拉選單" id="SystemProblemType" required [(ngModel)]="Feedbackdata.Problem_Type">
+          <mat-option *ngFor="let Optionitem of SystemProblemType" [value]="Optionitem">
+            {{ Optionitem }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="SystemNameCotrol.hasError('required') " style="font-size: 12px; ">
+          請選問題種類
+        </mat-error>
+      </mat-form-field>
+      <br>
+
+      <label id="example-radio-group-label" style="color:darkgoldenrod; font-size:20px;">系統名稱 (System Name):</label>
+      <br>
+      <mat-form-field appearance="outline" style="font-size: 12px; width:100%;">
+        <mat-select placeholder="下拉選單" id="SystemName" required [(ngModel)]="Feedbackdata.System_Name">
+          <mat-option *ngFor="let Optionitem of SystemNameOption" [value]="Optionitem">
+            {{ Optionitem }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="SystemNameCotrol.hasError('required') " style="font-size: 12px; ">
+          請選系統名稱
+        </mat-error>
+      </mat-form-field>
+
+      <br>
+      <label id="example-radio-group-label" style="color:darkgoldenrod; font-size:20px;">描述 (Description):</label>
+      <mat-form-field class="example-full-width" appearance="fill" style="margin-top: 2%;">
+        <textarea matInput [(ngModel)]="Feedbackdata.description" style="height:200px;"></textarea>
+      </mat-form-field>
+      <br>
+      <app-uploadfile [config]="afuConfig" (Send_file_to_feeback)="filedata($event)"></app-uploadfile>
+      <div>
+        <button mat-raised-button color="primary" class="float-end" (click)="show_data()" *ngIf="true">ShowData</button>
+        <button mat-raised-button color="primary" class="float-end" (click)="open_dialog()">傳送</button>
+      </div>
+    </div>
+  </mat-card>
+  <app-private-data-table></app-private-data-table>
+</div>

@@ -1,0 +1,11 @@
+table {
+  min-height: 5%;
+}
+
+
+
+mat-cell > span.ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}

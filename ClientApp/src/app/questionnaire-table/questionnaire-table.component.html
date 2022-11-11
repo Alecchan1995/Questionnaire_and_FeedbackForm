@@ -1,0 +1,29 @@
+<mat-card class="example-card" align="left" style="margin-bottom: 5rem;">
+  <div style="padding: 0 10%;padding-bottom: 5%;">
+    <label id="example-radio-group-label" style="color:darkgoldenrod; font-size:20px;"> 系統名稱(System Name):
+      <span style="margin-left: 20px;">{{systemname}}</span></label>
+      <hr>
+    <label id="example-radio-group-label" style="color:darkgoldenrod; font-size:20px;">服務品質滿意度調查</label>
+    <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+      [(ngModel)]="Questionnairedata.Service_Fraction">
+      <mat-radio-button class="example-radio-button" *ngFor="let score of scores" [value]="score" >
+        <b>{{score}}</b>
+      </mat-radio-button>
+    </mat-radio-group>
+    <label id="example-radio-group-label" style="color:darkgoldenrod; font-size:20px;">處理時效滿意度調查</label>
+    <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+      [(ngModel)]="Questionnairedata.Process_Fraction">
+      <mat-radio-button class="example-radio-button" *ngFor="let score of scores" [value]="score">
+        <b>{{score}}</b>
+      </mat-radio-button>
+    </mat-radio-group>
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>意見:</mat-label>
+      <textarea matInput [(ngModel)]="Questionnairedata.Other_Idea" style="height:150px;"></textarea>
+    </mat-form-field>
+    <div>
+      <!-- <button mat-raised-button color="primary" class="float-end" (click)="show_data()">Show_data</button> -->
+      <button mat-raised-button color="primary" class="float-end" (click)="send_data()">Send</button>
+    </div>
+  </div>
+</mat-card>

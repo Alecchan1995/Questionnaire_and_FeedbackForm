@@ -1,0 +1,14 @@
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+.text-style{
+  color:blue;
+}
+::ng-deep .mat-button-wrapper{
+  display:flex !important;
+  flex-wrap: wrap!important;
+  justify-items: center!important;
+  align-items: center!important;
+}
