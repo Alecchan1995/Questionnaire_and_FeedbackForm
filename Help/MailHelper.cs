@@ -53,8 +53,8 @@ namespace Questionnaire_and_FeedbackForm.Helpers
             using (var smtpClient = new SmtpClient())
             {
                 //smtpClient.Connect("10.110.15.79", 25);
-                smtpClient.Connect("smtp.gmail.com", 587);
-                smtpClient.Authenticate("alecchan1995@gmail.com", "goshehzljkxtkwjl");
+                 smtpClient.Connect("smtp.gmail.com", 465);
+                 smtpClient.Authenticate("alecchan1995@gmail.com", "rqkjijrhoxuciwjq");
                 //認證
                 try
                 {

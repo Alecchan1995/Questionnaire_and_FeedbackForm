@@ -24,7 +24,6 @@ export class RecordEditDelWithPersonComponent implements OnInit {
   ngOnInit(): void {
     this.AutoHelpSeviceManagerService.GetDeal_With_Person(this.data.ID).subscribe( x =>
       {
-        console.log("x = ",x);
         this.dataSource = x;
         this.dataSource.access_time = new Date(this.dataSource.access_time);
       });

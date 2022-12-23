@@ -6,6 +6,7 @@ export interface IPrivateData{
     deal_with_idea: string,
     deal_with_time: string,
     deal_with_person:string,
+    deal_with_person_telephoneNumber:string,
     principal:string,
     SystemFeedbackForm: {
       description: string,
@@ -15,5 +16,6 @@ export interface IPrivateData{
       Send_Time: string,
       deal_with_state: string,
       Problem_Type: string,
+      FillInPersontelephoneNumber:string
   }
 }

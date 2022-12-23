@@ -39,16 +39,18 @@ export class AdministratorComponent implements OnInit {
     this.GetAlldata(); // 拿全部data
   }
   GetAlldata(){
-    console.log("all data");
     this.AutoHelpSeviceManagerService.Getalldata().subscribe(x => {
-      //console.log(x);
       this.Alldata = x; //用來search 資料
       this.set_data_list(x);
       var get_id = this.route.snapshot.queryParamMap.get('id'); // 取一筆資料
-      console.log("--route:",this.route.snapshot.queryParamMap.get('id'));
       if (get_id != null ||this.route.snapshot.queryParamMap.get('id') != undefined){
         var data = this.Alldata.filter(x => x.ID == parseInt(get_id!));
-        if (data.length > 0){this.openDialog(data[0])};
+        if(this.route.snapshot.queryParamMap.get('completeedit') == "true"){
+          this.openDialog(data[0],true);
+        }
+        else{
+          if (data.length > 0){this.openDialog(data[0])};
+        }
       }
     })
 
@@ -56,7 +58,6 @@ export class AdministratorComponent implements OnInit {
   GetYourmaintainer(){
     this.AutoHelpSeviceManagerService.GetYourmaintainer()
     .subscribe(x => {
-      //console.log(x);
       this.set_data_list(x);
     })
   }
@@ -90,22 +91,21 @@ export class AdministratorComponent implements OnInit {
         }
       });
     }
-    //console.log("===========",this.storage_data);
   }
-  openDialog(element:any): void {
+  openDialog(element:any,Edit_switch:boolean=false): void {
     const dialogRef = this.dialog.open(AdministratorContentComponent, {
       width: '40%',
       minHeight: '70%',
       disableClose: true,
-      data: {content:element},
+      data: {content:element,Edit_switch:Edit_switch},
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.AutoHelpSeviceManagerService.Getalldata().subscribe(x => {
-        //console.log(x);
-        this.set_data_list(x);
-      })
+      //console.log('The dialog was closed');
+      // this.AutoHelpSeviceManagerService.Getalldata().subscribe(x => {
+      //   console.log("---====----",x);
+      //   this.set_data_list(x);
+      // })
       //this.animal = result;
     });
   }

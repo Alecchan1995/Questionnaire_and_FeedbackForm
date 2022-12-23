@@ -29,9 +29,7 @@ export class QuestionnaireTableComponent implements OnInit {
     const score =this.route.snapshot.paramMap.get('score');
     this.QuestionnaireService.getquestiondata(Number(questionnaireID)).subscribe(x => {
       this.Questionnairedata = x;
-      //console.log(x);
       this.confirm_name = Object.values(this.Questionnairedata.SystemFeedbackForm)[3];
-      console.log(Object.values(this.Questionnairedata.SystemFeedbackForm)[3]);
       this.check_permisson();
       this.systemname = Object.values(this.Questionnairedata.SystemFeedbackForm)[4];
       if(score =='5'){
@@ -42,14 +40,13 @@ export class QuestionnaireTableComponent implements OnInit {
   }
   check_permisson(){
     this.UsernameService.get_user_name().subscribe(x=>{
-      console.log("x=",x.replace("COMPAL\\",""),"name=",this.confirm_name);
       if(x.replace("COMPAL\\","") != this.confirm_name){
         this.router.navigateByUrl('Error');
       }
     });
   }
   show_data(){
-    console.log(this.Questionnairedata);
+    //console.log(this.Questionnairedata);
   }
   send_data() {
     this.QuestionnaireService.Sendquestionnairedata(this.Questionnairedata).subscribe(x => {
@@ -67,7 +64,6 @@ export class QuestionnaireTableComponent implements OnInit {
         width: '250px',
       });
       dialogRef.afterClosed().subscribe(result => {
-        //console.log(result);
       });
     }
     else {

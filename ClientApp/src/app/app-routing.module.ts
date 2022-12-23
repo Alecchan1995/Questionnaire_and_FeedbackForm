@@ -12,6 +12,7 @@ const routes: Routes = [
   {path:'questionnaire/:questionnairenumber/:score',component:QuestionnaireTableComponent},
   {path:'Error',component:ErrorviewComponent},
   {path:'Administrator',component:AdministratorComponent},
+  {path:'Administrator/:id/:completeedit',component:AdministratorComponent},
   {path:'Administrator/:id',component:AdministratorComponent},
   {path:'**',component:ErrorviewComponent},
 ];

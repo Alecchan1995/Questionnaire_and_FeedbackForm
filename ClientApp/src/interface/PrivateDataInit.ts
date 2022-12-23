@@ -8,6 +8,7 @@ export const PrivateDataInit : IPrivateData[]=[{
   deal_with_time: "",
   deal_with_person:"",
   principal:"",
+  deal_with_person_telephoneNumber:"",
   SystemFeedbackForm: {
     description: "",
     filename: "",
@@ -16,5 +17,6 @@ export const PrivateDataInit : IPrivateData[]=[{
     Send_Time: "",
     deal_with_state: "",
     Problem_Type: "",
+    FillInPersontelephoneNumber:"",
   }
 }];

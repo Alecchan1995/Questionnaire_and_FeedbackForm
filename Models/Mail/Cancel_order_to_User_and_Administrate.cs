@@ -3,12 +3,11 @@ using Questionnaire_and_FeedbackForm.Models.Mail;
 using System.Net;
 namespace Questionnaire_and_FeedbackForm.Models.MailTemplate
 {
-    public class User_TO_Administrate : BaseMail
+    public class Cancel_order_to_User_and_Administrate : BaseMail
     {
-        public User_TO_Administrate(SystemFeedbackForm data,List<string> choose_list,string message, IWebHostEnvironment Environment,IPModel _ip,bool principal_url = false) : base()
+        public Cancel_order_to_User_and_Administrate(SystemFeedbackForm data,string message,IPModel _ip) : base()
         {
             this.FromAddress = data.Fill_In_Person + "@compal.com";
-            string wwwPath = Environment.WebRootPath;
             var Set_Body_Head = $@"
                     <html>
                         <head>
@@ -55,7 +54,7 @@ namespace Questionnaire_and_FeedbackForm.Models.MailTemplate
                             </tr>
                             <tr>
                                 <th style="" width: 20%;  color:#333333; background-color:#E9ECF1;"">提發者</th>
-                                <td style=""background-color: #E9ECF1;"">{data.Fill_In_Person}</td>
+                                <td style=""background-color: #E9ECF1;"">{data.Fill_In_Person+data.FillInPersontelephoneNumber}</td>
                             </tr>
                             <tr>
                                 <th style="" width: 20%; background-color: #F7F6F3; color:#284775;"">種顃</th>
@@ -78,27 +77,17 @@ namespace Questionnaire_and_FeedbackForm.Models.MailTemplate
                                 <td style="" background-color:#F7F6F3;"">{data.Questionnaire.deal_with_person+data.Questionnaire.deal_with_person_telephoneNumber}</td>
                             </tr>
                             <tr>
+                                <th style="" width: 20%; background-color: #F7F6F3; color:#284775;"">取消原因</th>
+                                <td style="" background-color:#F7F6F3;"">{data.Questionnaire.deal_with_idea}</td>
+                            </tr>
+                            <tr>
                                 <th style="" width: 20%;  color:#333333; background-color:#E9ECF1;"">附件</th>
                                 <td style=""background-color: #E9ECF1;"">";
                 foreach(var file_name in data.filename.Split(",")){
                             Set_Body_Head+=$@"<a href=""{_ip.Backweb}/api/Send_Mail_/Downfile/{file_name}"">{file_name}<br>";
                 }
             Set_Body_Head+=$@"</td></tr>";
-            if(choose_list.Count() > 0){
-                Set_Body_Head+=$@" <tr>
-                                    <th style="" width: 20%; background-color: #F7F6F3; color:#284775;"">請選負責人員</th>
-                                    <td style="" background-color:#F7F6F3;"">";
-                                foreach(var member in choose_list){
-                                    if(member.IndexOf(":PM") == -1){
-                                            Set_Body_Head +=$@"<a href=""{_ip.Backweb}/api/Send_Mail_/Send_TO_Member/{member}/{data.ID} "">{member} </a> <br>";
-                                    }                                  
-                                }
-                                //https://localhost:44439/Administrator?id=13081&completeedit=true
-                Set_Body_Head += $@"<a href=""{_ip.Frontweb}/Administrator?id={data.ID}&completeedit=true"">其他member</a><br>" ;
-                Set_Body_Head +=  $@"</td></tr>";
-            }
-            Set_Body_Head+=$@"</table>
-            </body> </html>";
+            Set_Body_Head+=$@"</table></body> </html>";
             Body.HtmlBody = Set_Body_Head;
         }
 

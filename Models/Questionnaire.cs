@@ -12,6 +12,7 @@ namespace Questionnaire_and_FeedbackForm.Models
         public string Other_Idea { get; set; } = "";
         public string deal_with_idea {get; set;} = "";
         public string deal_with_person {get; set;} = "";
+        public string deal_with_person_telephoneNumber {get;set;} = "";
         public string principal {get;set;} = "";
         public DateTime deal_with_time {get;set;} =  DateTime.Now;
         

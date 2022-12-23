@@ -34,9 +34,8 @@ export class AutoHelpSeviceManagerService {
   GetDeal_With_Person(Id:number){
     return this.http.get(`${environment.apiUrl}/AutoHelpSystemDBfunction/GetDeal_With_Person/${Id}`, {withCredentials: true });
   }
-  AddOrderPrincipal(Person:String,ID:number){
-    var person={person:Person,ID:ID};
-    return this.http.post(`${environment.apiUrl}/AutoHelpSystemDBfunction/AddOrderPrincipal`, person,{withCredentials: true,responseType: 'text'});
+  Check_User_Name(name:string){
+    return this.http.get<Array<string>>(`${environment.apiUrl}/AutoHelpSystemDBfunction/Check_User_Name/${name}`, { withCredentials: true});
   }
 }
 

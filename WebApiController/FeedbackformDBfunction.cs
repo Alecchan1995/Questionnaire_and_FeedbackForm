@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Hosting;
 using Questionnaire_and_FeedbackForm.Models.MailTemplate;
 using Questionnaire_and_FeedbackForm.Helpers;
 using System.Text.RegularExpressions;
+using Microsoft.Extensions.Options;
+
 namespace Questionnaire_and_FeedbackForm.WebApiController
 {
     [ApiController]
@@ -13,44 +15,47 @@ namespace Questionnaire_and_FeedbackForm.WebApiController
     {
         private readonly QuestionnaireDataDBContext _db;
         private readonly string[] propertyList = new string[] { "employeeID", "department", "SAMAccountName", "mailNickname", "telephoneNumber", "mail" };
-        private readonly IADService _adSerive;
+        private readonly IUserService _userSerive;
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _Environment;
-        public FeedbackformDBfunctionController(QuestionnaireDataDBContext db,IMapper mapper,IWebHostEnvironment Environment,IADService adSerive)
+        private readonly IPModel _ip;
+        public FeedbackformDBfunctionController(QuestionnaireDataDBContext db,IMapper mapper,IWebHostEnvironment Environment,IUserService userSerive,IOptions<IPModel> options)
         {
             _mapper = mapper;
             _db = db;
             _Environment = Environment;
-            _adSerive=adSerive;
+            _userSerive=userSerive;
+            _ip = options.Value;
         }
 
         [Route("Save")]
         [HttpPost]
+        //回饋完成發出Mail通知
         public string SaveData(SystemFeedbackFormDataDTO SystemFeedbackFormData)
         {
             var Feedbackdata = new SystemFeedbackForm();
             Feedbackdata = _mapper.Map<SystemFeedbackForm>(SystemFeedbackFormData);
             Feedbackdata.Questionnaire=new Questionnaire();
-            try{ Feedbackdata.Fill_In_Person = Feedbackdata.Fill_In_Person.Replace("COMPAL\\","")+_adSerive.GetTPEADUserInfoByADName(Feedbackdata.Fill_In_Person.Replace("COMPAL\\",""), propertyList).Where(x => x.Property == "telephoneNumber").FirstOrDefault()?.Value.First(); }
-            catch(Exception e){Feedbackdata.Fill_In_Person = Feedbackdata.Fill_In_Person.Replace("COMPAL\\","");}
-            List<string> System_Maintainer = _db.ModelOptions.Where(x => x.OptionColumn == "SystemFeedbackForms."+SystemFeedbackFormData.System_Name+"_Maintainer").Select(x => x.OptionItem).FirstOrDefault()!.Split(",").ToList()!;
-            
-            foreach(var i in System_Maintainer){
-                if(i.IndexOf(":PM") != -1){
-                    string PM_Name =  i.Replace(":PM","");
-                    Feedbackdata.Questionnaire.deal_with_person = PM_Name;
-                    Feedbackdata.Questionnaire.principal = PM_Name;
-                    _db.SystemFeedbackForms.Add(Feedbackdata);
-                    _db.SaveChanges();
-                    var mail = new User_TO_Administrate(Feedbackdata,System_Maintainer,"新的需求，請分配!",_Environment);
-                    mail.RecipientAddress = new List<string> {PM_Name};
-                    MailHelper<User_TO_Administrate>.SendMail(mail);
-                    _db.OrderPrincipalDataModels.Add(new OrderPrincipalDataModel{order_id = Feedbackdata.ID, deal_with_persons = Feedbackdata.Questionnaire.deal_with_person});
-                    _db.SaveChanges();
-                    return "OK";
-                }
-            };
-            return "Error";
+            Feedbackdata.Fill_In_Person = Feedbackdata.Fill_In_Person.Replace("COMPAL\\","");
+            //取分機
+            try{
+               Feedbackdata.FillInPersontelephoneNumber = _userSerive!.GetTPEADUserInfoByADName(Feedbackdata.Fill_In_Person, propertyList)!.Where(x => x.Property == "telephoneNumber")!.FirstOrDefault()!.Value.First();
+            } 
+            catch{  Feedbackdata.FillInPersontelephoneNumber = "沒有分機號碼"; }
+            //取RD和Lender，給lender選處理人
+            List<string> System_Maintainer = _db.ModelOptions.Where(x => x.OptionColumn == "SystemFeedbackForms."+SystemFeedbackFormData.System_Name+"_Maintainer" && x.GroupKey == "RD").Select(x => x.OptionItem).ToList()!;
+            //取lender
+            var lender = _db.ModelOptions.Where(x => x.OptionColumn == "SystemFeedbackForms."+SystemFeedbackFormData.System_Name+"_Maintainer" && x.GroupKey == "Lender").Select(x => x.OptionItem).FirstOrDefault()!;
+            Feedbackdata.Questionnaire.principal = lender;
+            _db.SystemFeedbackForms.Add(Feedbackdata);
+            _db.SaveChanges();
+            System_Maintainer.Add(lender);
+            //給lender
+            var mail = new User_TO_Administrate(Feedbackdata,System_Maintainer,"新的需求，請分配!",_Environment,_ip);
+            //先發給lender
+            mail.RecipientAddress = new List<string> {lender};
+            MailHelper<User_TO_Administrate>.SendMail(mail);
+            return "OK";
         }
         [Route("GetSystemName")]
         [HttpGet]

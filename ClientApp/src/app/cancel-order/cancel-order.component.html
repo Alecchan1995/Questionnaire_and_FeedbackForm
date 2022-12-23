@@ -7,14 +7,17 @@
            aria-label="Number"
            matInput
            [formControl]="myControl"
-           [matAutocomplete]="auto">
+           [matAutocomplete]="auto"
+           required
+           (keyup.enter)="choose_you_data()"
+           (onchange)="choose_you_data()">
            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-             <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+             <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="choose_you_data()">
                {{option}}
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>
-          <button mat-icon-button aria-label="search" (click)="choose_you_data()">
+          <button mat-icon-button aria-label="search" (click)="choose_you_data()" >
             <mat-icon>search</mat-icon>
           </button>
 </form>
@@ -23,27 +26,27 @@
   <div>申請人: {{choose_data[0].SystemFeedbackForm.Fill_In_Person}}</div>
   <div>申請時間: {{choose_data[0].SystemFeedbackForm.Send_Time | date:'medium'}}</div>
   <div>系統: {{choose_data[0].SystemFeedbackForm.System_Name}}</div>
-  <div>問題:
-    <mat-form-field appearance="outline" style="width: 100%;">
+  <div>問題:<br>
+    <mat-form-field class="example-full-width" appearance="outline">
       <textarea matInput [value]="choose_data[0].SystemFeedbackForm.description" disabled></textarea>
     </mat-form-field>
   </div>
   <div>附件: {{choose_data[0].SystemFeedbackForm.filename || "These isn't File"}}</div>
   <div>退申請原因選項:
     <mat-form-field appearance="fill">
-      <mat-select>
-        <mat-option *ngFor="let food of foods" [value]="food.value">
-          {{food.viewValue}}
+      <mat-select >
+        <mat-option *ngFor="let option of Canceloptions" [value]="option.OptionItem" (click)="reason = option.OptionItem">
+          {{option.OptionItem}}
         </mat-option>
       </mat-select>
     </mat-form-field>
   </div>
   <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>退申請原因:</mat-label>
-    <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
+    <textarea matInput [(ngModel)]="reason"></textarea>
   </mat-form-field>
 </div>
 <button mat-raised-button color="warn" (click)="closedialog()" class="float-start">取消</button>
-<button mat-raised-button color="primary" (click)="choose_you_data()" class="float-end" *ngIf="choose_data[0].ID !== 0">正確</button>
+<button mat-raised-button color="primary" (click)="send_data()" class="float-end" *ngIf="choose_data[0].ID !== 0" >正確</button>
 
 

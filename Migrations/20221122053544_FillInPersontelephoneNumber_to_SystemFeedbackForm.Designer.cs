@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Questionnaire_and_FeedbackForm.Models;
 
@@ -11,9 +12,10 @@ using Questionnaire_and_FeedbackForm.Models;
 namespace Questionnaire_and_FeedbackForm.Migrations
 {
     [DbContext(typeof(QuestionnaireDataDBContext))]
-    partial class QuestionnaireDataDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221122053544_FillInPersontelephoneNumber_to_SystemFeedbackForm")]
+    partial class FillInPersontelephoneNumber_to_SystemFeedbackForm
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,7 +46,7 @@ namespace Questionnaire_and_FeedbackForm.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ModelOptions", (string)null);
+                    b.ToTable("ModelOptions");
                 });
 
             modelBuilder.Entity("Questionnaire_and_FeedbackForm.Models.OrderPrincipalDataModel", b =>
@@ -67,7 +69,7 @@ namespace Questionnaire_and_FeedbackForm.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("OrderPrincipalDataModels", (string)null);
+                    b.ToTable("OrderPrincipalDataModels");
                 });
 
             modelBuilder.Entity("Questionnaire_and_FeedbackForm.Models.Questionnaire", b =>
@@ -108,7 +110,7 @@ namespace Questionnaire_and_FeedbackForm.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Questionnaires", (string)null);
+                    b.ToTable("Questionnaires");
                 });
 
             modelBuilder.Entity("Questionnaire_and_FeedbackForm.Models.RoleAndPermission", b =>
@@ -129,7 +131,7 @@ namespace Questionnaire_and_FeedbackForm.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("RoleAndPermissions", (string)null);
+                    b.ToTable("RoleAndPermissions");
                 });
 
             modelBuilder.Entity("Questionnaire_and_FeedbackForm.Models.SystemFeedbackForm", b =>
@@ -173,7 +175,7 @@ namespace Questionnaire_and_FeedbackForm.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("SystemFeedbackForms", (string)null);
+                    b.ToTable("SystemFeedbackForms");
                 });
 
             modelBuilder.Entity("Questionnaire_and_FeedbackForm.Models.Questionnaire", b =>

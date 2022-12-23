@@ -13,6 +13,7 @@ builder.Services.AddAuthorization(options =>
     options.FallbackPolicy = options.DefaultPolicy;
 });
 //builder.Services.AddControllersWithViews();
+builder.Services.Configure<IPModel>(builder.Configuration.GetSection("IPweb"));
 builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.PropertyNamingPolicy = null
 );
@@ -31,7 +32,7 @@ builder.Services.AddDbContext<QuestionnaireDataDBContext>(options =>
 builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IADService, ADService>();
+builder.Services.AddScoped<IUserService, UserService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

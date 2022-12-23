@@ -29,8 +29,8 @@ namespace Questionnaire_and_FeedbackForm.WebControllers
             data.Service_Fraction = Questionnaires.Service_Fraction;
             data.Other_Idea = Questionnaires.Other_Idea;
             _db.SaveChanges();
-            //  var mail = new User_TO_Administrate(data);
-            //     MailHelper<User_TO_Administrate>.SendMail(mail);
+            //var mail = new User_TO_Administrate(data);
+            //MailHelper<User_TO_Administrate>.SendMail(mail);
             return "OK";
         }
         [Route("GetQuestionnaireForm/{QuestionnaireID}")]

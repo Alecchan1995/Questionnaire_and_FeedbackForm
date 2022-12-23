@@ -35,7 +35,7 @@ export class PrivateDataTableComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      //console.log('The dialog was closed');
       this.AutoHelpSeviceManagerService.Getalldata().subscribe(x => {
         //console.log(x);
         //this.set_data_list(x);

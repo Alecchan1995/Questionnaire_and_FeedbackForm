@@ -32,6 +32,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { RecordEditDelWithPersonComponent } from './administrator-content/record-edit-del-with-person/record-edit-del-with-person.component';
 import { CancelOrderComponent } from './cancel-order/cancel-order.component';
+import { EditsystemdataComponent } from './editsystemdata/editsystemdata.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,7 +48,8 @@ import { CancelOrderComponent } from './cancel-order/cancel-order.component';
     AdministratorContentComponent,
     EditPrincipalComponent,
     RecordEditDelWithPersonComponent,
-    CancelOrderComponent
+    CancelOrderComponent,
+    EditsystemdataComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

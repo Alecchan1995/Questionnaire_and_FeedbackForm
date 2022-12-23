@@ -1,15 +1,13 @@
-import { Component, OnInit ,Inject} from '@angular/core';
+import { Component, OnInit ,Inject, SimpleChanges} from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { IPrivateData } from "../../interface/IPrivateData";
 import { PrivateDataInit } from "../../interface/PrivateDataInit";
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-import { AutoHelpSeviceManagerService } from "../service/auto-help-sevice-manager.service";
+import {CancelOrderService} from "../service/cancel-order.service";
+import {CancelOption} from "../../interface/CancelOption";
 import {FormControl} from '@angular/forms';
-interface Food {
-  value: string;
-  viewValue: string;
-}
+
 @Component({
   selector: 'app-cancel-order',
   templateUrl: './cancel-order.component.html',
@@ -20,18 +18,17 @@ export class CancelOrderComponent implements OnInit {
   myControl = new FormControl('');
   options: string[] = [];
   datacontentdata : Array<IPrivateData> = [];
-  filteredOptions: any = [];
+  filteredOptions :any = [];
+  Canceloptions :Array<CancelOption> =[];
   reason = "";
+  no="";
   choose_data = PrivateDataInit;
-  foods: Food[] = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'},
-  ];
-  constructor(public AutoHelpSeviceManagerService:AutoHelpSeviceManagerService,public dialogRef: MatDialogRef<CancelOrderComponent>,@Inject(MAT_DIALOG_DATA) public data: { content: Array<IPrivateData> }) { }
+  constructor(
+    public dialogRef: MatDialogRef<CancelOrderComponent>,
+    public CancelOrderServices:CancelOrderService) { }
 
   ngOnInit(): void {
-    this.AutoHelpSeviceManagerService.Getprivatedata().subscribe(x =>
+    this.CancelOrderServices.Getprivatedata().subscribe(x =>
     {
         this.datacontentdata = x ;
         this.datacontentdata.forEach(data=>{
@@ -40,6 +37,7 @@ export class CancelOrderComponent implements OnInit {
         this.firstfunction();
     });
     this.firstfunction();
+    this.CancelOrderServices.getproblemtype().subscribe(x => {this.Canceloptions = x;})
   }
   firstfunction(){
       this.filteredOptions = this.myControl.valueChanges.pipe(
@@ -50,13 +48,23 @@ export class CancelOrderComponent implements OnInit {
   closedialog() {
     this.dialogRef.close();
   }
+
   private _filter(value: string): string[] {
-    console.log("----------22222");
     const filterValue = value;
+    this.myControl.valueChanges.subscribe(data => console.log(data));
     return this.options.filter(option => option.includes(filterValue));
   }
   choose_you_data(){
-      this.choose_data = this.datacontentdata.filter(data=>data.ID == this.myControl.value);
-      console.log("this.choose_data",this.choose_data);
+      if(this.myControl.value.length ==0 ){return}
+  }
+  showdata(){
+    //console.log("show data",this.reason);
+  }
+  ngOnChanges(changes: SimpleChanges) {
+    console.log("Change");
+    // changes.prop contains the old and the new value...
+  }
+  send_data(){
+    this.CancelOrderServices.save_data(this.myControl.value,this.reason).subscribe(x=>{alert("successful");this.closedialog();})
   }
 }

@@ -1,3 +1,4 @@
+#nullable disable warnings
 namespace Questionnaire_and_FeedbackForm.ViewModels
 {
     public class DicVM

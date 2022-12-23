@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Questionnaire_and_FeedbackForm.Helpers;
+using Questionnaire_and_FeedbackForm;
 namespace System_Questionnaire.WebControllers
 {
 
@@ -9,9 +11,8 @@ namespace System_Questionnaire.WebControllers
     {
         [HttpGet]
         public string Get()
-        {
-            var name = User.Identity?.Name;
-           // Console.WriteLine(name);
+        {   
+            var name = User.Identity!.Name!.Replace("COMPAL\\","");
             if (name == null)
             {
                 name = "None";

@@ -3,7 +3,7 @@ using Questionnaire_and_FeedbackForm.Models;
 using Questionnaire_and_FeedbackForm.Models.Mail;
 public class Administrate_TO_User : BaseMail
     {
-        public Administrate_TO_User(Questionnaire data) : base()
+        public Administrate_TO_User(Questionnaire data,IPModel _ip) : base()
         {
             this.FromAddress = "alecchan1995@gmail.com";
             var Set_Body_Head = $@"
@@ -45,7 +45,7 @@ public class Administrate_TO_User : BaseMail
                             <div style=""font-size:50px; font-weight:1000; color:cornflowerblue;"">
                                 <span >
                                     意見調查連結:
-                                </span><a style=""color:red;"" href='https://localhost:44439/questionnaire/{data.SystemFeedbackForm.ID}/5 '>非常滿意請按［讚］</a></span>
+                                </span><a style=""color:red;"" href='{_ip.Frontweb}/questionnaire/{data.SystemFeedbackForm.ID}/5 '>非常滿意請按［讚］</a></span>
 							</div>
                           <table style=""width:50%; margin-top:1rem"" >
                                 <tr style=""height:35px;"">
@@ -70,8 +70,9 @@ public class Administrate_TO_User : BaseMail
                                 </tr>
                             </table>
                             <br>
-                            <div style=""font-size:35px; font-weight:1000; color:cornflowerblue;""><span >意見調查連結:</span><a href='https://localhost:44439/questionnaire/{data.SystemFeedbackForm.ID}'>HERE</a></span></div>
+                            <div style=""font-size:35px; font-weight:1000; color:cornflowerblue;""><span >意見調查連結:</span><a href='{_ip.Frontweb}/questionnaire/{data.SystemFeedbackForm.ID}/5'>HERE</a></span></div>
                             </div>
+                            \n\n\n\n HHHHHHHH
                         </body>
                 </html>";
             Body.HtmlBody = Set_Body_Head; 

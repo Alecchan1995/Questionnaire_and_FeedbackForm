@@ -5,6 +5,7 @@ import { PermissionService } from "../service/permission.service"
 import { MatDialog} from '@angular/material/dialog';
 import { Ipermission } from "../../interface/Ipermission";
 import { CancelOrderComponent } from '../cancel-order/cancel-order.component';
+import { EditsystemdataComponent } from '../editsystemdata/editsystemdata.component';
 @Component({
   selector: 'app-questionnaire-head',
   templateUrl: './questionnaire-head.component.html',
@@ -16,11 +17,14 @@ export class QuestionnaireHeadComponent implements OnInit {
   constructor(private router: Router,public dialog: MatDialog, private PermissionService: PermissionService) { }
   ngOnInit(): void {
     this.PermissionService.getpermission_and_roled()
-      .subscribe(x => {
-        if (x != null) {
-          this.check_administrator_permission(x.Role);
-          console.log(x);
-        }
+      .subscribe({
+        next: (x) => {
+          if (x != null) {
+            this.check_administrator_permission(x.Role);
+          }
+        },
+        error: (e) => console.error(e),
+        complete: () =>{console.log('complete')}
       })
   }
   ngOnChanges(changes: SimpleChanges,) {
@@ -42,6 +46,14 @@ export class QuestionnaireHeadComponent implements OnInit {
   openCancelOrderComponent(): void {
     const dialogRef = this.dialog.open(CancelOrderComponent, {
       width: '40%',
+      minHeight: '70%',
+      disableClose: true,
+      data: {content:"hi"},
+    });
+  }
+  open_editsystem():void{
+    const dialogRef = this.dialog.open(EditsystemdataComponent, {
+      width: '35%',
       minHeight: '70%',
       disableClose: true,
       data: {content:"hi"},

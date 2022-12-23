@@ -1,0 +1,84 @@
+<mat-form-field style="width:100%" appearance="outline">
+  <mat-label>選項</mat-label>
+  <mat-select>
+    <mat-option *ngFor="let Item of Items" [value]="Item.value" (click)="chooseItem(Item.value)">
+      {{Item.viewValue}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<div *ngIf="choose === 'editsystem'">
+  <mat-list *ngFor="let item of dataList">
+    <mat-list-item >{{item}}</mat-list-item>
+    <button matSuffix mat-icon-button aria-label="Clear" class="float-end" style="transform: translate(0px, -50px); cursor: pointer;" (click)="deleteSystemname(item)" matTooltip="刪除">
+      <mat-icon>close</mat-icon>
+    </button>
+    <mat-divider></mat-divider>
+  </mat-list>
+  <br>
+  <div style="height: 10%;">
+    <mat-form-field style="width:80%" appearance="outline">
+      <mat-label>New System</mat-label>
+      <input matInput request [(ngModel)]="newitem">
+      <button matSuffix mat-icon-button aria-label="Clear" (click)="AddItem()" matTooltip="增加">
+        <mat-icon>note_add</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+</div>
+
+<div *ngIf="choose === 'editadministrator'">
+  <mat-form-field style="width:100%" appearance="outline">
+    <mat-label>System Name</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let Item of dataList" [value]="Item" (click)="GETSystemmember(Item)">
+        {{Item}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-list *ngFor="let item of memberList">
+    <mat-list-item >{{item}}</mat-list-item>
+    <button matSuffix mat-icon-button aria-label="Clear" class="float-end" style="transform: translate(0px, -50px); cursor: pointer;" (click)="deleteSystemname(item)" matTooltip="刪除">
+      <mat-icon>close</mat-icon>
+    </button>
+    <mat-divider></mat-divider>
+  </mat-list>
+  <br>
+  <div style="height: 10%;" *ngIf="system_name.length > 0">`
+    <mat-form-field style="width:80%" appearance="outline">
+      <mat-label>New member</mat-label>
+      <input matInput request [(ngModel)]="newitem">
+      <button matSuffix mat-icon-button aria-label="Clear" (click)="AddItem()" matTooltip="增加">
+        <mat-icon>note_add</mat-icon>
+      </button>
+    </mat-form-field>
+    <section class="example-section">
+      <label class="example-margin">Role:</label>
+      <mat-radio-group [(ngModel)]="chooserole" *ngFor="let role of roles">
+        <mat-radio-button class="example-margin" value="{{role}}">{{role}}</mat-radio-button>
+      </mat-radio-group>
+    </section>
+  </div>
+</div>
+
+<div *ngIf="choose === 'editemploy'">
+  <mat-list *ngFor="let item of dataList">
+    <mat-list-item >{{item}}</mat-list-item>
+    <button matSuffix mat-icon-button aria-label="Clear" class="float-end" style="transform: translate(0px, -50px); cursor: pointer;" (click)="deleteSystemname(item)" matTooltip="刪除">
+      <mat-icon>close</mat-icon>
+    </button>
+    <mat-divider></mat-divider>
+  </mat-list>
+  <br>
+  <div style="height: 10%;">
+    <mat-form-field style="width:80%" appearance="outline">
+      <mat-label>New System</mat-label>
+      <input matInput request [(ngModel)]="newitem">
+      <button matSuffix mat-icon-button aria-label="Clear" (click)="AddItem()" matTooltip="增加">
+        <mat-icon>note_add</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+</div>
+
+    <br>
+    <button mat-raised-button color="warn" (click)="closedialog()" class="float-start">退出</button>

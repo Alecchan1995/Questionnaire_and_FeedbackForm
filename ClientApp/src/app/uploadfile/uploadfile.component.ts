@@ -126,8 +126,6 @@ export class UploadfileComponent implements OnInit {
     this.Send_file_to_feeback.emit(this.allowedFiles);
   }
   onChange(event: any) {
-    console.log("upload file:",event);
-    console.log("=========",event.target.result);
     this.fileSelected.emit(event);
     this.notAllowedFiles = [];
     const fileExtRegExp: RegExp = /(?:\.([^.]+))?$/;
@@ -220,7 +218,6 @@ export class UploadfileComponent implements OnInit {
       var reader = new FileReader(); //建立FileReader物件
       reader.readAsDataURL(file);
       reader.onload = function(){
-        console.log("reader.result!.toString() :",reader.result!.toString());
         var img = document.createElement('img');
         if(reader.result!.toString().length > 5){img.src = reader.result!.toString();}
         img.id = idname+"pic"
